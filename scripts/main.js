@@ -1,6 +1,16 @@
 // Default value for when the user did not enter one
 const UNSPECIFIED = "unspecified";
 
+// File names for each html page
+const FIRSTANDLAST = "../pages/firstLastName.html";
+const GENDER = "../pages/gender.html";
+const ZIP = "../pages/zipcode.html";
+const GROUPSIZE = "../pages/groupSize.html";
+const ETHNICITY = "../pages/ethnicity.html";
+const MEMBER = "../pages/memberStatus.html";
+const EMAIL = "../pages/emailAddress.html";
+const HEARD = "../pages/howHear.html";
+
 // getName: gets the name that the user entered
 function getName(){
 
