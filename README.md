@@ -2,7 +2,9 @@
 
 This is a refactor of my college capstone project found at: https://github.com/raunchers/HMA  
   
-This website is a basic questionaire that will gather, voluntarily, the demographics of visitors to Hickory Museum of Art. This information is then sent to the State and Federal Governments for State and Federal aid. 
+This website is a basic questionaire that will gather, voluntarily, the demographics of visitors to Hickory Museum of Art.
+
+The site will also collect information from Organizations that are visiting the Museum, all voluntary.
 
 The website will be accessed through an IPAD.
   
@@ -16,8 +18,9 @@ Questions for non-organizations, all voluntary:
     5. Ethnicity
     6. Is the user a member of Hickory Museum of Art
         A. If no, question 7 is presented.
-    7. Email Address (if no was selected for question 6)
-    8. How did you hear about Hickory Museum of Art  
+        B. If no, question 8 is presented.
+    7. Email Address (if no was selected for question 6)  
+    8. How did you hear about Hickory Museum of Art (if no was selected for question 6)  
   
 Questions for organizations, all voluntary:
     1. Organization's Name
