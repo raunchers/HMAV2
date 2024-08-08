@@ -2,7 +2,8 @@
 const UNSPECIFIED = "unspecified";
 
 // File names for each html page
-const FIRSTANDLAST = "../pages/firstLastName.html";
+const INDEX = "../index.html";
+const FIRSTANDLAST = "../HMAV2/pages/firstLastName.html";
 const GENDER = "../pages/gender.html";
 const ZIP = "../pages/zipcode.html";
 const GROUPSIZE = "../pages/groupSize.html";
@@ -11,8 +12,82 @@ const MEMBER = "../pages/memberStatus.html";
 const EMAIL = "../pages/emailAddress.html";
 const HEARD = "../pages/howHear.html";
 
+// All page titles, will be used to help redirect the user based on current page
+const INDEXPAGE = "Welcome";
+const FLNAME = "First and Last Name";
+const UGENDER = "Gender";
+const ZIPCODE = "Zip Code";
+const SGROUP = "Group Size";
+const ETH = "Ethnicity";
+const MEMBERSTATUS = "Member Status";
+const EMAILAD = "Email Adress";
+const HOWHEARD = "Heard About";
+
+// handles the next button click
+// Will redirect to the next page based on the current page
+function clickedNext(){
+    // Grab the current pages title
+    let currentPage = document.title;
+    
+    // Use the current pages title to redirect to the next page
+    switch(currentPage){
+        case INDEXPAGE:
+            location.href = FIRSTANDLAST;
+            break;
+        case FLNAME:
+            location.href = GENDER;
+            break;
+        case UGENDER:
+            location.href = ZIP;
+            break;
+        case ZIPCODE:
+            location.href = GROUPSIZE;
+            break;
+        case SGROUP:
+            location.href = ETHNICITY;
+            break;
+        case ETH:
+            location.href = MEMBER;
+            break;
+        case MEMBERSTATUS:
+            // location.href = ;
+            let yesOrNo = getIfMember();
+            // If no, route to email page
+            if(yesOrNo === "N"){
+                // Redirect to email
+                location.href = EMAIL;
+            }else{
+                // If yes, commit
+                console.log("Selected yes.")
+                break;
+            }
+        case EMAILAD:
+            location.href = HEARD;
+            break;
+        case HOWHEARD:
+            // Call function to get user selection
+            console.log("Called switch statement for commit");
+            break;
+    }// End switch statement
+}
+
+// handles the previous button click
+// Redirects to the previous page based on the current page
+function clickedPrevious(){
+
+}
+
+// changePage: Will have the current page title passed to it
+// Will redirect the user to the correct page based off of what the page title is
+function changePage(){
+    
+}
+
 // getName: gets the name that the user entered
 function getName(){
+
+    // Next page
+    let nextPage = GENDER;
 
     // Grab the first and last names
     let firstName = document.getElementById("firstName").value;
@@ -116,5 +191,5 @@ function getHowHeard(){
 function getIfMember(){
     // Grab the value of the selected radio button
     let selectedButton = document.querySelector('input[type=radio][name=memberStatus]:checked').value;
-    console.log(selectedButton);
+    return selectedButton;
 }
