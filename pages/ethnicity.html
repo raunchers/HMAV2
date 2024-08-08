@@ -9,20 +9,21 @@
     <div class="containerBody">
         <div class="contentBody">
             <label for="wEth">White:</label>
-            <input type="radio" name="ethnicity" id="wEth"><br>
+            <input type="radio" name="ethnicity" id="wEth" value="White"><br>
             <label for="bEth">African American:</label>
-            <input type="radio" name="ethnicity" id="bEth"><br>
+            <input type="radio" name="ethnicity" id="bEth" value="African American"><br>
             <label for="aEth">Asian:</label>
-            <input type="radio" name="ethnicity" id="aEth"><br>
+            <input type="radio" name="ethnicity" id="aEth" value="Asian"><br>
             <label for="aiEth">American Indian:</label>
-            <input type="radio" name="ethnicity" id="aiEth"><br>
+            <input type="radio" name="ethnicity" id="aiEth" value="American Indian"><br>
             <label for="aiEth">Other:</label>
-            <input type="radio" name="ethnicity" id="other"><br>
+            <input type="radio" name="ethnicity" id="other" value="Other"><br>
             <label for="unspecified">Unspecified:</label>
-            <input type="radio" name="ethnicity" id="unspecified">
+            <input type="radio" name="ethnicity" id="unspecified" value="unspecified" checked>
         </div>
         <input type="button" value="BACK" id="backBTN">
-        <input type="button" value="NEXT" id="nextBTN">
+        <input type="button" value="NEXT" id="nextBTN" onclick="getEthnicity()">
     </div>
+    <script src="../scripts/main.js"></script>
 </body>
 </html>

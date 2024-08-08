@@ -1,61 +1,110 @@
-// Guest: Will hold the user inputted information
-class Guest{
-    firstName;
-    lastName;
-    zipcode;
-    groupSize;
-    ethnicity;
-    memberStatus;
-    email;
-    heardAbout;
+// Default value for when the user did not enter one
+const UNSPECIFIED = "unspecified";
 
-    // Will set default values for all fields when instanced.
-    // Setters will be called to change the information that the user enters
-    constructor(){
-        this.firstName = "John";
-        this.lastName = "Smith";
-        this.zipcode = "00000";
-        this.groupSize = 0;
-        this.ethnicity = "Unspecified";
-        this.memberStatus = "No";
-        this.email = "email@email.com";
-        this.heardAbout = "Unspecified";
+// getName: gets the name that the user entered
+function getName(){
+
+    // Grab the first and last names
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+
+    // If there is a first name but not a last name.
+    if(firstName && !lastName){
+        lastName = UNSPECIFIED;
+        console.log(firstName, " ", lastName);
+        return
     }
 
-    // Set the first and last name
-    setFirstAndLast(first, last){
-        this.firstName = first;
-        this.lastName = last;
+    // If there is a last name but not a first name.
+    if(!firstName && lastName){
+        firstName = UNSPECIFIED;
+        console.log(firstName, " ", lastName);
+        return
     }
 
-    // Set the zip code
-    setZipCode(zip){
-        this.zipcode = zip;
+    // If there is not a value for first or last name, set default values
+    if(!firstName || !lastName){
+        firstName = UNSPECIFIED;
+        lastName = UNSPECIFIED;
+        console.log(firstName, " ", lastName);
+        return
     }
 
-    // Set the group size
-    setGroupSize(size){
-        this.groupSize = size;
-    }
+    console.log(firstName, " ", lastName);
 
-    // Set the ethnicity
-    setEthnicity(eth){
-        this.ethnicity = eth;
-    }
 
-    // Set member status
-    setMemberStatus(member){
-        this.memberStatus = member;
-    }
-
-    // Set email address
-    setMemberStatus(email){
-        this.email = email;
-    }
-
-    // Set how the user heard about the museum
-    setHeardAbout(heard){
-        this.heardAbout = heard;
-    }
+    // Pass first and last name to the setter function in Go?
 }
 
+// getEmail: gets the email address that the user entered
+function getEmail(){
+    // Grab the email 
+    let userEmail = document.getElementById("userEmail").value;
+
+    // If no email was entered
+    if(!userEmail){
+        userEmail = UNSPECIFIED;
+        console.log(userEmail);
+        return
+    }
+
+    console.log(userEmail);
+
+    // Call setter function
+}
+
+// getZip: gets the zip code that the user entered
+function getZip(){
+    // Grab the zip 
+    let userZip = document.getElementById("zipCode").value;
+
+    // If no zip code was entered, use the default value
+    if(!userZip){
+        userZip = UNSPECIFIED;
+        console.log(userZip);
+        return
+    }
+
+    console.log(userZip);
+
+    // Call setter function
+}
+
+// getEthnicity: gets the ethnicity that the user selected
+function getEthnicity(){
+    // Grab the value of the selected radio button
+    let selectedButton = document.querySelector('input[type=radio][name=ethnicity]:checked').value;
+    console.log(selectedButton);
+}
+
+// getGroupSize: Gets the group size that the user entered
+function getGroupSize(){
+    // Default group size if one was not entered
+    let defaultSize = 1;
+
+    // Grab the user inputted value
+    let userGroupSize = document.getElementById("groupSize").value;
+
+    // If the size is <= 0, set the size to 1
+    if(userGroupSize <= 0){
+        userGroupSize = defaultSize;
+    }
+
+    console.log(userGroupSize);
+
+    // Call setter function
+}
+
+// getHowHeard: gets how the user heard about the museum
+function getHowHeard(){
+    // Grab the value of the selected radio button
+    let selectedButton = document.querySelector('input[type=radio][name=heardAbout]:checked').value;
+    console.log(selectedButton);
+}
+
+// getIfMember: gets if the user selected yes or no
+function getIfMember(){
+    // Grab the value of the selected radio button
+    let selectedButton = document.querySelector('input[type=radio][name=memberStatus]:checked').value;
+    console.log(selectedButton);
+}

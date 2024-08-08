@@ -9,16 +9,17 @@
     <div class="containerBody">
         <div class="contentBody">
             <label for="intHeard">Internet:</label>
-            <input type="radio" name="heardAbout" id="intHeard"><br>
+            <input type="radio" name="heardAbout" id="intHeard" value="Internet"><br>
             <label for="newHeard">News Ad:</label>
-            <input type="radio" name="heardAbout" id="newHeard"><br>
+            <input type="radio" name="heardAbout" id="newHeard" value="News Ad"><br>
             <label for="friFamHeard">Friends and Family:</label>
-            <input type="radio" name="heardAbout" id="friFamHeard"><br>
+            <input type="radio" name="heardAbout" id="friFamHeard" value="Friends and Family"><br>
             <label for="othHeard">Other:</label>
-            <input type="radio" name="heardAbout" id="othHeard"><br>
+            <input type="radio" name="heardAbout" id="othHeard" value="Other" checked><br>
         </div>
         <input type="button" value="BACK" id="backBTN">
-        <input type="button" value="NEXT" id="nextBTN">
+        <input type="button" value="NEXT" id="nextBTN" onclick="getHowHeard()">
     </div>
+    <script src="../scripts/main.js"></script>
 </body>
 </html>
