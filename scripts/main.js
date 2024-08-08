@@ -4,6 +4,8 @@ const UNSPECIFIED = "unspecified";
 // File names for each html page
 const INDEX = "../index.html";
 const FIRSTANDLAST = "../HMAV2/pages/firstLastName.html";
+// Used for the back button click on the gender page
+const BACKFIRSTANDLAST = "../pages/firstLastName.html"
 const GENDER = "../pages/gender.html";
 const ZIP = "../pages/zipcode.html";
 const GROUPSIZE = "../pages/groupSize.html";
@@ -50,8 +52,9 @@ function clickedNext(){
             location.href = MEMBER;
             break;
         case MEMBERSTATUS:
-            // location.href = ;
+            // Grab the answer from the user
             let yesOrNo = getIfMember();
+
             // If no, route to email page
             if(yesOrNo === "N"){
                 // Redirect to email
@@ -73,8 +76,37 @@ function clickedNext(){
 
 // handles the previous button click
 // Redirects to the previous page based on the current page
-function clickedPrevious(){
-
+function clickedBack(){
+    // Grab the current pages title
+    let currentPage = document.title;
+    
+    // Use the current pages title to redirect to the next page
+    switch(currentPage){
+        case FLNAME:
+            location.href = INDEX;
+            break;
+        case UGENDER:
+            location.href = BACKFIRSTANDLAST;
+            break;
+        case ZIPCODE:
+            location.href = GENDER;
+            break;
+        case SGROUP:
+            location.href = ZIP;
+            break;
+        case ETH:
+            location.href = GROUPSIZE;
+            break;
+        case MEMBERSTATUS:
+            location.href = ETHNICITY;
+            break;
+        case EMAILAD:
+            location.href = MEMBER;
+            break;
+        case HOWHEARD:
+            location.href = EMAIL;
+            break;
+    }// End switch statement
 }
 
 // changePage: Will have the current page title passed to it
