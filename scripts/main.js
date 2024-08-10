@@ -4,8 +4,6 @@ const UNSPECIFIED = "unspecified";
 // File names for each html page
 const INDEX = "../index.html";
 const FIRSTANDLAST = "../HMAV2/pages/firstLastName.html";
-// Used for the back button click on the gender page
-const BACKFIRSTANDLAST = "../pages/firstLastName.html"
 const GENDER = "../pages/gender.html";
 const ZIP = "../pages/zipcode.html";
 const GROUPSIZE = "../pages/groupSize.html";
@@ -37,18 +35,23 @@ function clickedNext(){
             location.href = FIRSTANDLAST;
             break;
         case FLNAME:
+            getName();
             location.href = GENDER;
             break;
         case UGENDER:
+            getGender();
             location.href = ZIP;
             break;
         case ZIPCODE:
+            getZip();
             location.href = GROUPSIZE;
             break;
         case SGROUP:
+            getGroupSize();
             location.href = ETHNICITY;
             break;
         case ETH:
+            getEthnicity();
             location.href = MEMBER;
             break;
         case MEMBERSTATUS:
@@ -60,66 +63,41 @@ function clickedNext(){
                 // Redirect to email
                 location.href = EMAIL;
             }else{
+                getIfMember();
                 // If yes, commit
-                console.log("Selected yes.")
+                console.log("Commit to DB");
                 break;
             }
         case EMAILAD:
+            getEmail();
             location.href = HEARD;
             break;
         case HOWHEARD:
-            // Call function to get user selection
-            console.log("Called switch statement for commit");
+            getHowHeard();
+            // Commit to DB
+            console.log("Commit to DB");
             break;
     }// End switch statement
 }
 
-// handles the previous button click
-// Redirects to the previous page based on the current page
+// handles the back button click
+// May need some additional logic when going back to the INDEX page, have the session data cleared.
 function clickedBack(){
     // Grab the current pages title
     let currentPage = document.title;
-    
-    // Use the current pages title to redirect to the next page
-    switch(currentPage){
-        case FLNAME:
-            location.href = INDEX;
-            break;
-        case UGENDER:
-            location.href = BACKFIRSTANDLAST;
-            break;
-        case ZIPCODE:
-            location.href = GENDER;
-            break;
-        case SGROUP:
-            location.href = ZIP;
-            break;
-        case ETH:
-            location.href = GROUPSIZE;
-            break;
-        case MEMBERSTATUS:
-            location.href = ETHNICITY;
-            break;
-        case EMAILAD:
-            location.href = MEMBER;
-            break;
-        case HOWHEARD:
-            location.href = EMAIL;
-            break;
-    }// End switch statement
-}
 
-// changePage: Will have the current page title passed to it
-// Will redirect the user to the correct page based off of what the page title is
-function changePage(){
-    
+    // If clicking the back button goes to the index page
+    // Clear the sessionStorage data
+    if(currentPage === FLNAME){
+        sessionStorage.clear();
+    }
+
+    // Loads the previous page
+    window.history.back();
 }
 
 // getName: gets the name that the user entered
 function getName(){
-
-    // Next page
-    let nextPage = GENDER;
 
     // Grab the first and last names
     let firstName = document.getElementById("firstName").value;
@@ -128,14 +106,16 @@ function getName(){
     // If there is a first name but not a last name.
     if(firstName && !lastName){
         lastName = UNSPECIFIED;
-        console.log(firstName, " ", lastName);
+        sessionStorage.setItem("firstName", firstName);
+        sessionStorage.setItem("lastName", lastName);
         return
     }
 
     // If there is a last name but not a first name.
     if(!firstName && lastName){
         firstName = UNSPECIFIED;
-        console.log(firstName, " ", lastName);
+        sessionStorage.setItem("firstName", firstName);
+        sessionStorage.setItem("lastName", lastName);
         return
     }
 
@@ -143,31 +123,21 @@ function getName(){
     if(!firstName || !lastName){
         firstName = UNSPECIFIED;
         lastName = UNSPECIFIED;
-        console.log(firstName, " ", lastName);
+        sessionStorage.setItem("firstName", firstName);
+        sessionStorage.setItem("lastName", lastName);
         return
     }
 
-    console.log(firstName, " ", lastName);
-
-
-    // Pass first and last name to the setter function in Go?
+    // If both name fields have entries
+    sessionStorage.setItem("firstName", firstName);
+    sessionStorage.setItem("lastName", lastName);
 }
 
-// getEmail: gets the email address that the user entered
-function getEmail(){
-    // Grab the email 
-    let userEmail = document.getElementById("userEmail").value;
-
-    // If no email was entered
-    if(!userEmail){
-        userEmail = UNSPECIFIED;
-        console.log(userEmail);
-        return
-    }
-
-    console.log(userEmail);
-
-    // Call setter function
+// getGender: gets which gender the user selected
+function getGender(){
+    // Grab the value of the selected radio button
+    let selectedButton = document.querySelector('input[type=radio][name=gender]:checked').value;
+    sessionStorage.setItem("gender", selectedButton);
 }
 
 // getZip: gets the zip code that the user entered
@@ -175,23 +145,25 @@ function getZip(){
     // Grab the zip 
     let userZip = document.getElementById("zipCode").value;
 
+    /* 
+        Need to have the page not redirect to the next question when the length of the zip code is too long
+        Need to stay on the same page and wait for the user to enter a valid zip code
+        Could have the function return the zip code and if there was an error
+        Check for no error in the page redirect function
+    */
+   if(userZip.length > 5){
+        alert("The zip code has too many digits, please enter a valid zip code.");
+        return
+   }
+
     // If no zip code was entered, use the default value
     if(!userZip){
         userZip = UNSPECIFIED;
-        console.log(userZip);
+        sessionStorage.setItem("userZip", userZip);
         return
     }
 
-    console.log(userZip);
-
-    // Call setter function
-}
-
-// getEthnicity: gets the ethnicity that the user selected
-function getEthnicity(){
-    // Grab the value of the selected radio button
-    let selectedButton = document.querySelector('input[type=radio][name=ethnicity]:checked').value;
-    console.log(selectedButton);
+    sessionStorage.setItem("userZip", userZip);
 }
 
 // getGroupSize: Gets the group size that the user entered
@@ -207,21 +179,45 @@ function getGroupSize(){
         userGroupSize = defaultSize;
     }
 
-    console.log(userGroupSize);
+    sessionStorage.setItem("groupSize", userGroupSize);
 
     // Call setter function
 }
 
-// getHowHeard: gets how the user heard about the museum
-function getHowHeard(){
+// getEthnicity: gets the ethnicity that the user selected
+function getEthnicity(){
     // Grab the value of the selected radio button
-    let selectedButton = document.querySelector('input[type=radio][name=heardAbout]:checked').value;
-    console.log(selectedButton);
+    let selectedButton = document.querySelector('input[type=radio][name=ethnicity]:checked').value;
+    sessionStorage.setItem("ethnicity", selectedButton);
 }
 
 // getIfMember: gets if the user selected yes or no
 function getIfMember(){
     // Grab the value of the selected radio button
     let selectedButton = document.querySelector('input[type=radio][name=memberStatus]:checked').value;
-    return selectedButton;
+    sessionStorage.setItem("memberStatus", selectedButton);
+    // Return if the user selected Yes or No
+    return selectedButton
+}
+
+// getEmail: gets the email address that the user entered
+function getEmail(){
+    // Grab the email 
+    let userEmail = document.getElementById("userEmail").value;
+
+    // If no email was entered
+    if(!userEmail){
+        userEmail = UNSPECIFIED;
+        sessionStorage.setItem("userEmail", userEmail);
+        return
+    }
+
+    sessionStorage.setItem("userEmail", userEmail);
+}
+
+// getHowHeard: gets how the user heard about the museum
+function getHowHeard(){
+    // Grab the value of the selected radio button
+    let selectedButton = document.querySelector('input[type=radio][name=heardAbout]:checked').value;
+    sessionStorage.setItem("heardAbout", selectedButton);
 }
