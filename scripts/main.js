@@ -1,3 +1,5 @@
+import fetch from "node-fetch"
+
 // Default value for when the user did not enter one
 const UNSPECIFIED = "unspecified";
 
@@ -221,3 +223,13 @@ function getHowHeard(){
     let selectedButton = document.querySelector('input[type=radio][name=heardAbout]:checked').value;
     sessionStorage.setItem("heardAbout", selectedButton);
 }
+
+// Return a promise that contains a response from the API URL accessed
+fetch("http://localhost:8080/guests")
+    .then((data) => data.json())
+    .then((data) => console.log(data));
+
+/* 
+    1. Set up routes for creating a guest
+    2. Set up data being handed from JS to GO
+*/
