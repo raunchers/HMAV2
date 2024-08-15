@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,7 +22,7 @@ type guest struct {
 
 // Slice of guest structs, will act as a database for now
 var guests = []guest{
-	{FIRSTNAME: "Michael", LASTNAME: "Ethridge", GENDER: "male", ZIP: "28658", GROUPSIZE: "1", ETHNICITY: "white", MEMBER: "N", EMAIL: "email@email.com", HEARD: "Other"},
+	{FIRSTNAME: "Michael", LASTNAME: "Ethridge", GENDER: "male", ZIP: "28658", GROUPSIZE: "1", ETHNICITY: "white", MEMBER: "N", EMAIL: "email@email.com", HEARD: "other"},
 	{FIRSTNAME: "unspecified", LASTNAME: "unspecified", GENDER: "unspecified", ZIP: "unspecified", GROUPSIZE: "1", ETHNICITY: "unspecified", MEMBER: "N", EMAIL: "email@email.com", HEARD: "unspecified"},
 }
 
@@ -49,6 +50,10 @@ func getGuest(c *gin.Context) {
 
 func main() {
 	router := gin.Default()
+
+	// Configure CORS
+	// Allows all origins
+	router.Use(cors.Default())
 
 	// Getters
 	router.GET("/guests", getGuest)

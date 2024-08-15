@@ -1,4 +1,4 @@
-import fetch from "node-fetch"
+// import fetch from "node-fetch"
 
 // Default value for when the user did not enter one
 const UNSPECIFIED = "unspecified";
@@ -77,7 +77,8 @@ function clickedNext(){
         case HOWHEARD:
             getHowHeard();
             // Commit to DB
-            console.log("Commit to DB");
+            commitGuestInfo("Firstname", "Lastname", "male", "11111", "1", "white", "N", UNSPECIFIED, UNSPECIFIED)
+            .then(() => getData());
             break;
     }// End switch statement
 }
@@ -198,6 +199,11 @@ function getIfMember(){
     // Grab the value of the selected radio button
     let selectedButton = document.querySelector('input[type=radio][name=memberStatus]:checked').value;
     sessionStorage.setItem("memberStatus", selectedButton);
+    // If the user is already a member, put the default values in for email and how they heard about the museum
+    if(selectedButton === "Y"){
+        sessionStorage.setItem("userEmail", UNSPECIFIED);
+        sessionStorage.setItem("heardAbout", UNSPECIFIED);
+    }
     // Return if the user selected Yes or No
     return selectedButton
 }
@@ -224,10 +230,49 @@ function getHowHeard(){
     sessionStorage.setItem("heardAbout", selectedButton);
 }
 
-// Return a promise that contains a response from the API URL accessed
-fetch("http://localhost:8080/guests")
+// getData gatehrs all currently saved guests data
+async function getData(){
+    // Return a promise that contains a response from the API URL accessed
+    // Contains the data(JSON)
+    const results = await fetch("http://localhost:8080/guests")
+        .then((data) => data.json())
+        .then((data) => data);
+    
+    for(const result of results){
+        console.log(result);
+    }
+}
+
+// collectUserData will collect the data from sessionStorage to pass it to commitGuestInfo
+function collectUserData(){
+
+}
+
+// commitGuestInfo commits the user inputted info to the DB
+async function commitGuestInfo(firstname, lastname, gender, zip, groupSize, ethnicity, member, email, heard){
+    const data = {
+        firstname, 
+        lastname, 
+        gender, 
+        zip, 
+        groupSize, 
+        ethnicity, 
+        member, 
+        email, 
+        heard
+    };
+
+    // Send as the request body to the API end point
+    const result = await fetch("http://localhost:8080/guests", {
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+    })
     .then((data) => data.json())
-    .then((data) => console.log(data));
+    .then((data) => data);
+}
 
 /* 
     1. Set up routes for creating a guest
