@@ -4,18 +4,18 @@
 const UNSPECIFIED = "unspecified";
 
 // File names for each html page
-const INDEX = "../index.html";
-const FIRSTANDLAST = "../HMAV2/pages/firstLastName.html";
-const GENDER = "../pages/gender.html";
-const ZIP = "../pages/zipcode.html";
-const GROUPSIZE = "../pages/groupSize.html";
-const ETHNICITY = "../pages/ethnicity.html";
-const MEMBER = "../pages/memberStatus.html";
-const EMAIL = "../pages/emailAddress.html";
-const HEARD = "../pages/howHear.html";
+const INDEXPAGE = "../index.html";
+const FIRSTANDLASTPAGE = "../HMAV2/pages/firstLastName.html";
+const GENDERPAGE = "../pages/gender.html";
+const ZIPPAGE = "../pages/zipcode.html";
+const GROUPSIZEPAGE = "../pages/groupSize.html";
+const ETHNICITYPAGE = "../pages/ethnicity.html";
+const MEMBERPAGE = "../pages/memberStatus.html";
+const EMAILPAGE = "../pages/emailAddress.html";
+const HEARDPAGE = "../pages/howHear.html";
 
 // All page titles, will be used to help redirect the user based on current page
-const INDEXPAGE = "Welcome";
+const INDEX = "Welcome";
 const FLNAME = "First and Last Name";
 const UGENDER = "Gender";
 const ZIPCODE = "Zip Code";
@@ -33,28 +33,28 @@ function clickedNext(){
     
     // Use the current pages title to redirect to the next page
     switch(currentPage){
-        case INDEXPAGE:
-            location.href = FIRSTANDLAST;
+        case INDEX:
+            location.href = FIRSTANDLASTPAGE;
             break;
         case FLNAME:
             getName();
-            location.href = GENDER;
+            location.href = GENDERPAGE;
             break;
         case UGENDER:
             getGender();
-            location.href = ZIP;
+            location.href = ZIPPAGE;
             break;
         case ZIPCODE:
             getZip();
-            location.href = GROUPSIZE;
+            location.href = GROUPSIZEPAGE;
             break;
         case SGROUP:
             getGroupSize();
-            location.href = ETHNICITY;
+            location.href = ETHNICITYPAGE;
             break;
         case ETH:
             getEthnicity();
-            location.href = MEMBER;
+            location.href = MEMBERPAGE;
             break;
         case MEMBERSTATUS:
             // Grab the answer from the user
@@ -63,22 +63,18 @@ function clickedNext(){
             // If no, route to email page
             if(yesOrNo === "N"){
                 // Redirect to email
-                location.href = EMAIL;
+                location.href = EMAILPAGE;
             }else{
                 getIfMember();
-                // If yes, commit
-                console.log("Commit to DB");
                 break;
             }
         case EMAILAD:
             getEmail();
-            location.href = HEARD;
+            location.href = HEARDPAGE;
             break;
         case HOWHEARD:
             getHowHeard();
-            // Commit to DB
-            commitGuestInfo("Firstname", "Lastname", "male", "11111", "1", "white", "N", UNSPECIFIED, UNSPECIFIED)
-            .then(() => getData());
+            collectUserData();
             break;
     }// End switch statement
 }
@@ -97,6 +93,12 @@ function clickedBack(){
 
     // Loads the previous page
     window.history.back();
+}
+
+// clickedHome sends the user back to the welcome page, clears sessionStorage
+function clickedHome(){
+    sessionStorage.clear();
+    location.href = INDEXPAGE;
 }
 
 // getName: gets the name that the user entered
@@ -245,17 +247,29 @@ async function getData(){
 
 // collectUserData will collect the data from sessionStorage to pass it to commitGuestInfo
 function collectUserData(){
+    // Collect user inputted data from sessionStorage 
+    let firstName = sessionStorage.getItem("firstName");
+    let lastName = sessionStorage.getItem("lastName");
+    let gender = sessionStorage.getItem("gender");
+    let zipCode = sessionStorage.getItem("userZip");
+    let groupSize = sessionStorage.getItem("groupSize");
+    let ethnicity = sessionStorage.getItem("ethnicity");
+    let memberStatus = sessionStorage.getItem("memberStatus");
+    let email = sessionStorage.getItem("userEmail");
+    let heardAbout = sessionStorage.getItem("heardAbout");
 
+    // Pass the data to commitGuestInfo for committing the data to the DB
+    commitGuestInfo(firstName, lastName, gender, zipCode, groupSize, ethnicity, memberStatus, email, heardAbout);
 }
 
 // commitGuestInfo commits the user inputted info to the DB
-async function commitGuestInfo(firstname, lastname, gender, zip, groupSize, ethnicity, member, email, heard){
+async function commitGuestInfo(firstname, lastname, gender, zip, groupsize, ethnicity, member, email, heard){
     const data = {
         firstname, 
         lastname, 
         gender, 
         zip, 
-        groupSize, 
+        groupsize, 
         ethnicity, 
         member, 
         email, 
@@ -273,8 +287,3 @@ async function commitGuestInfo(firstname, lastname, gender, zip, groupSize, ethn
     .then((data) => data.json())
     .then((data) => data);
 }
-
-/* 
-    1. Set up routes for creating a guest
-    2. Set up data being handed from JS to GO
-*/

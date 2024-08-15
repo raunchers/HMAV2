@@ -22,7 +22,6 @@ type guest struct {
 
 // Slice of guest structs, will act as a database for now
 var guests = []guest{
-	{FIRSTNAME: "Michael", LASTNAME: "Ethridge", GENDER: "male", ZIP: "28658", GROUPSIZE: "1", ETHNICITY: "white", MEMBER: "N", EMAIL: "email@email.com", HEARD: "other"},
 	{FIRSTNAME: "unspecified", LASTNAME: "unspecified", GENDER: "unspecified", ZIP: "unspecified", GROUPSIZE: "1", ETHNICITY: "unspecified", MEMBER: "N", EMAIL: "email@email.com", HEARD: "unspecified"},
 }
 
