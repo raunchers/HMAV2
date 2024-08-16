@@ -25,8 +25,7 @@ const MEMBERSTATUS = "Member Status";
 const EMAILAD = "Email Adress";
 const HOWHEARD = "Heard About";
 
-// handles the next button click
-// Will redirect to the next page based on the current page
+// clickedNext Will redirect to the next page based on the current page
 function clickedNext(){
     // Grab the current pages title
     let currentPage = document.title;
@@ -57,7 +56,7 @@ function clickedNext(){
             location.href = MEMBERPAGE;
             break;
         case MEMBERSTATUS:
-            // Grab the answer from the user
+            // Get the answer from the user
             let yesOrNo = getIfMember();
 
             // If no, route to email page
@@ -65,7 +64,7 @@ function clickedNext(){
                 // Redirect to email
                 location.href = EMAILPAGE;
             }else{
-                getIfMember();
+                collectUserData();
                 break;
             }
         case EMAILAD:
