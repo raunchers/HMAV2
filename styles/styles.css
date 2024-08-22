@@ -3,3 +3,49 @@
     padding: 0;
     border: 0;
 }
+body, html{
+    height: 100%;
+    display: grid;
+}
+label{
+    font-size: 2em;
+    padding-right: 1em;
+}
+h5{
+    font-size: 4em;
+    padding: 1em;
+}
+input[type="radio"]{
+    height: 2em;
+    width: 2em;
+}
+li{
+    margin-top: 1em;
+}
+.radioBTNs{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.form-control{
+    font-size: 2em;
+    padding: 5%;
+}
+.whole-card{
+    height: 60vh;
+    width: 60vw;
+    margin:auto;
+}
+.set-card-header{
+    height: 5vh;
+}
+.set-card-footer{
+    height: 5vh;
+}
+.progress{
+    margin-top: 5%;
+}
+.btn{
+    font-size: 1.5em;
+    width: 100%;
+}
